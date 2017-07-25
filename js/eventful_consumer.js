@@ -1,4 +1,4 @@
-
+//funcao em contrução pois ainda nao conseguimos acesso direto a api eventful
 function carregaMarkers(){
 	var xhr = new XMLHttpRequest();
 
@@ -13,7 +13,7 @@ function carregaMarkers(){
 			jsonParse.forEach(function(element) {
         		var response = element.latlng;
 				addMarker(element.latlng);
-		}, this);
+			}, this);
 		}
 		else{
 			alert("Erro na chamada da api eventful");
@@ -23,7 +23,7 @@ function carregaMarkers(){
 	});
 
 
-	xhr.open("GET","https://restcountries.eu/rest/v2/regionalbloc/eu", true);
+	xhr.open("GET","https://restcountries.eu/rest/v2/name/brasil?fullText=true", true);
 	xhr.send();
 
 }

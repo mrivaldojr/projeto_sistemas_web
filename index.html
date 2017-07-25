@@ -1,21 +1,56 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR" style="heigth: 100%;">
 <head>
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	<title>
-		Busca de Eventos
-	</title>
+	<title>	Events4All - Buscando eventos pelo mundo </title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device=width" initial-scale=1>
+	<meta name="Keywords" content="eventos, events4all, show, música, festa, twitter, eventful">
+	<meta name="Description" content="Aplicação para busca de eventos e shows em todo o mundo.">
+	<link rel="stylesheet" type="text/css" href="css/reset.css" />
+	<link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 
 <body>
 
-<div id="map-container">
-</div>
-<button id="btn-buscar"> </button>
-<script type="text/javascript" src="map.js"></script>
-<script type="text/javascript" src="eventful_consumer.js"></script>
-<script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBllazmTrek8tGD2zzWFAzgdTnHRmENssE&callback=initMap">
-</script>
+	<div class="fundo_titulo">
+	    <h1> <a href="index.html"> Events4All </a> </h1>
+	</div>
+
+	<div id="menu">
+		<nav class="menu">
+		      <ul>
+				<li><a href="index.html">Home</a></li>
+				<li><a href="">Eventos da Semana</a></li>
+				<li><a href="">Principais Artistas</a></li>
+				<li><a href="programacao.html">Programação</a></li>
+				<li><a href="">Ajuda</a></li>
+				<li><a href="">Fale com a gente</a></li>
+		      </ul>
+		</nav>
+	</div>
+
+	<div id="calendar_map_results"> 
+		<div id="results"> </div>
+		<div id="map-container"> 
+			<div><p id="errorBox"></p></div>
+		</div>
+	</div>
+	
+	<div id="eventos">
+		<h2>Eventos nas proximidades</h2>
+		<div id="results2"> </div>
+	</div>
+
+	<div id="rodape">
+		<footer>
+		  &copy; Events4All - Todos os eventos do mundo num só lugar.
+		</footer>
+	</div>
+
 </body>
+	<script type="text/javascript" src="js/map.js"></script>
+	<script type="text/javascript" src="js/eventful_consumer.js"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBllazmTrek8tGD2zzWFAzgdTnHRmENssE&callback=initMap"></script>
 </html>
+
+

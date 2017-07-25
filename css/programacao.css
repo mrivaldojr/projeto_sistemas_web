@@ -1,0 +1,84 @@
+
+.generos ul {
+    padding:3px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    margin:0px;
+    list-style:none;
+    text-align: center;
+    height: 250px;
+    width: 150px;
+
+}
+
+.generos ul li {
+    display: block; 
+    background-color:#00688B;
+    border-radius: 6px;
+    border: 2px solid white;
+    padding:3px;
+    /* Declaração para aparecer no Firefox */
+    -moz-border-radius: 6px;
+    /* Para exibir nos outros navegadores como Chrome, safari, opera*/
+    -webkit-border-radius: 6px;
+}
+
+.generos ul li a {
+    display: block;
+    background-color:#00688B;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    border: 2px solid white;
+    padding:3px;
+    /* Declaração para aparecer no Firefox */
+    -moz-border-radius: 6px;
+    /* Para exibir nos outros navegadores como Chrome, safari, opera*/
+    -webkit-border-radius: 6px;
+
+}
+
+.generos ul li a:hover {
+    background-color:#87CEFF;
+    color: #EE9A00;
+}
+
+#categorias{
+    display: block;
+    float:left;
+    width: 100%;
+    margin-left:15px;
+}
+
+#principais_eventos_da_semana{
+    display: block;
+    float:left;
+    width: 70%;
+    margin-left:15px;
+}
+
+#imagem_texto{
+    margin: 5px;
+    min-width: 100px;
+    max-width: 200px;
+    width:auto;
+    display: block;
+    float:left;
+    background-color:#D6D6D6;
+    border: 1px solid black;
+}
+
+#imagem_texto img{
+    margin: 0px;
+    min-width: 100px;
+    max-width: 200px;
+    width:auto;
+
+}
+#imagem_texto a{
+    text-decoration: none;
+}
+
+#imagem_texto a:hover {
+    color: #EE9A00;
+}
