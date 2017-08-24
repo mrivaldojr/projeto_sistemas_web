@@ -1,5 +1,7 @@
 // precisa agora jogar as informações de cidade/estado/país para uma pesquisa no eventful
 
+
+
 var testeCoordenadas = {lat: -12.973040099999999, lng: -38.502303999999995};
 
 var errorBox = document.getElementById("errorBox");
@@ -107,37 +109,17 @@ function mapsRequest(){
 	xhr.send();
 }
 
-
-
 function eventFulRequest(){
 
-	var xhr = new XMLHttpRequest();
-
-	var resposta;
-
-	xhr.addEventListener("load", function(){
-		if(xhr.status==200){
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
 			var jsonParse = JSON.parse(this.response);
-
-			for (var i = 0; i < 1; i++) {
-				var result = jsonParse.results[i];				
-				
-				document.getElementById("results2").innerHTML = result;
-			}
-
-			alert(result);
-		}
-		else{
-			alert("Erro na chamada da API");
+			document.getElementById("results2").innerHTML = xhttp.responseText;
 		}
 
-
-	});
-
-	xhr.open("GET","https://api.eventful.com/rest/events/search?app_key=cD7NKFXPPDzQR6qD&where="+userLatLonS+"&within=35", true);
-	xhr.setRequestHeader('X-Requested-With','XMLHttpRequest');
-	xhr.send();
+	};
+	
+	xhttp.open("GET", "http://localhost/web/php/eventful.php?latlon="+userLatLonS, true);
+	xhttp.send();
 }
-
-
-
