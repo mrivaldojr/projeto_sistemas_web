@@ -1,14 +1,15 @@
-// precisa agora jogar as informações de cidade/estado/país para uma pesquisa no eventful
+var music_marker = 'http://localhost/web/img/concert_marker.png'
 
+var markers = [];
 
-
-var testeCoordenadas = {lat: -12.973040099999999, lng: -38.502303999999995};
+var options = {
+	imagePath: 'http://localhost/web/img/m'
+};
 
 var errorBox = document.getElementById("errorBox");
 var userLatLon , userLatLonS;
 var mapa,street,city,state,country;
 var mapsApiKey = "AIzaSyC768eb2jHhTHjmkZp5i1B24CoIX9sqt0U";
-var conteudoAqui = '<h2>Você está aqui</h2>';
 
 function renderMap(){
 	var mapProp = new google.maps.Map(document.getElementById('map-container'), {
@@ -18,8 +19,7 @@ function renderMap(){
 	var map=new google.maps.Map(document.getElementById("map-container"),mapProp);
 	mapa = map;
 	console.log(map);
-	addMarker(userLatLon);
-	
+
 	mapsRequest();
 	eventFulRequest();
 }
@@ -29,8 +29,6 @@ function initMap(){
 } 
 
 function addMarker(latlng){
-	//var pos = {lat: latlng[0], lng:latlng[1]};
-
 	var infowindow = new google.maps.InfoWindow({
           content: conteudoAqui
     });
@@ -43,7 +41,25 @@ function addMarker(latlng){
 		
 	marker.addListener('click', function() {
 	  infowindow.open(mapa, marker);
+	});	
+}
+
+function addMarkerEvento(latlng, title){
+	var infowindow = new google.maps.InfoWindow({
+          content: title
 	});
+
+	var marker = new google.maps.Marker({
+          position: latlng,
+		  map: mapa,
+		  icon: music_marker
+		});
+		
+	marker.addListener('click', function() {
+	  infowindow.open(mapa, marker);
+	});
+
+	return marker;
 }
 
 function getLocation() {
@@ -111,11 +127,44 @@ function mapsRequest(){
 
 function eventFulRequest(){
 
+	var markers = [];
+	var titulos = [];
+	var pos = [];
+
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			var jsonParse = JSON.parse(this.response);
+
+			for(var i=0; i<jsonParse.events.event.length;i++){
+				var lat = parseFloat(jsonParse.events.event[i].latitude);
+				var lng = parseFloat(jsonParse.events.event[i].longitude);
+				var latLong = {lat:lat, lng:lng}
+				var titulo = "<strong>Atração: </strong>"+jsonParse.events.event[i].title+
+				"<br><strong>Data: </strong>"+
+				jsonParse.events.event[i].start_time+"<br><a target=\"_blank\" href=\""+
+				jsonParse.events.event[i].url+
+				"\">Comprar Ingressos </a><br>";
+
+				if(pos!=[]){
+					for(var j=0;j<pos.length;j++){
+						if( (latLong.lat == pos[j].lat) && (latLong.lng == pos[j].lng) ){
+							titulo = titulo+"<br>"+"<strong>Atração: </strong>"+
+							jsonParse.events.event[j].title+"<br><strong>Data: </strong>"+
+							jsonParse.events.event[j].start_time+"<br><a target=\"_blank\" href=\""+
+							jsonParse.events.event[j].url+
+							" \">Comprar Ingressos </a><br>";
+						}
+					}
+				}
+
+				
+				pos.push(latLong);
+				addMarkerEvento(latLong, titulo);
+			}
 			document.getElementById("results2").innerHTML = xhttp.responseText;
+
+			//var markerCluster = new MarkerClusterer(mapa, markers, options);
 		}
 
 	};

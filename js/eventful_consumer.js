@@ -1,29 +1,21 @@
-//funcao em contrução pois ainda nao conseguimos acesso direto a api eventful
-function carregaMarkers(){
-	var xhr = new XMLHttpRequest();
-
-	var resposta;
-
-	xhr.addEventListener("load", function(){
-		if(xhr.status==200){
-			var jsonParse = JSON.parse(this.response);
-
-			alert(jsonParse);
-
-			jsonParse.forEach(function(element) {
-        		var response = element.latlng;
-				addMarker(element.latlng);
-			}, this);
-		}
-		else{
-			alert("Erro na chamada da api eventful");
-		}
-
-
-	});
-
-
-	xhr.open("GET","https://restcountries.eu/rest/v2/name/brasil?fullText=true", true);
-	xhr.send();
-
-}
+function eventFulRequest(){
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var jsonParse = JSON.parse(this.response);
+	
+				for(var i=0; i<jsonParse.events.event.length;i++){
+					var lat = parseFloat(jsonParse.events.event[i].latitude);
+					var lng = parseFloat(jsonParse.events.event[i].longitude);
+					var latLong = {lat:lat, lng:lng}
+					
+					addMarkerEvento(latLong);
+				}
+	
+			}
+	
+		};
+		
+		xhttp.open("GET", "http://localhost/web/php/eventful.php?latlon="+userLatLonS, true);
+		xhttp.send();
+	}
