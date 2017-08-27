@@ -21,7 +21,7 @@ function renderMap(){
 	console.log(map);
 
 	mapsRequest();
-	eventFulRequest();
+	eventFulRequest(userLatLonS, "mapa");
 }
 
 function initMap(){
@@ -125,50 +125,57 @@ function mapsRequest(){
 	xhr.send();
 }
 
-function eventFulRequest(){
-
+function populaMapa(jsonParse){
 	var markers = [];
 	var titulos = [];
 	var pos = [];
 
+	for(var i=0; i<jsonParse.events.event.length;i++){
+		var lat = parseFloat(jsonParse.events.event[i].latitude);
+		var lng = parseFloat(jsonParse.events.event[i].longitude);
+		var latLong = {lat:lat, lng:lng}
+		var titulo = "<strong>Atração: </strong>"+jsonParse.events.event[i].title+
+		"<br><strong>Data: </strong>"+
+		jsonParse.events.event[i].start_time+"<br><a target=\"_blank\" href=\""+
+		jsonParse.events.event[i].url+
+		"\">Comprar Ingressos </a><br>";
+
+		if(pos!=[]){
+			for(var j=0;j<pos.length;j++){
+				if( (latLong.lat == pos[j].lat) && (latLong.lng == pos[j].lng) ){
+					titulo = titulo+"<br>"+"<strong>Atração: </strong>"+
+					jsonParse.events.event[j].title+"<br><strong>Data: </strong>"+
+					jsonParse.events.event[j].start_time+"<br><a target=\"_blank\" href=\""+
+					jsonParse.events.event[j].url+
+					" \">Comprar Ingressos </a><br>";
+				}
+			}
+		}
+
+		
+		pos.push(latLong);
+		addMarkerEvento(latLong, titulo);
+	}
+	document.getElementById("results2").innerHTML = JSON.stringify(jsonParse);
+
+}
+
+function eventFulRequest(latLong, local){
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			var jsonParse = JSON.parse(this.response);
-
-			for(var i=0; i<jsonParse.events.event.length;i++){
-				var lat = parseFloat(jsonParse.events.event[i].latitude);
-				var lng = parseFloat(jsonParse.events.event[i].longitude);
-				var latLong = {lat:lat, lng:lng}
-				var titulo = "<strong>Atração: </strong>"+jsonParse.events.event[i].title+
-				"<br><strong>Data: </strong>"+
-				jsonParse.events.event[i].start_time+"<br><a target=\"_blank\" href=\""+
-				jsonParse.events.event[i].url+
-				"\">Comprar Ingressos </a><br>";
-
-				if(pos!=[]){
-					for(var j=0;j<pos.length;j++){
-						if( (latLong.lat == pos[j].lat) && (latLong.lng == pos[j].lng) ){
-							titulo = titulo+"<br>"+"<strong>Atração: </strong>"+
-							jsonParse.events.event[j].title+"<br><strong>Data: </strong>"+
-							jsonParse.events.event[j].start_time+"<br><a target=\"_blank\" href=\""+
-							jsonParse.events.event[j].url+
-							" \">Comprar Ingressos </a><br>";
-						}
-					}
-				}
-
-				
-				pos.push(latLong);
-				addMarkerEvento(latLong, titulo);
+			if(local=="mapa"){
+				populaMapa(jsonParse);
 			}
-			document.getElementById("results2").innerHTML = xhttp.responseText;
-
+			else if(local=="busca"){
+				populaLista(jsonParse);
+			}
+		
 			//var markerCluster = new MarkerClusterer(mapa, markers, options);
 		}
 
 	};
-	
-	xhttp.open("GET", "http://localhost/web/php/eventful.php?latlon="+userLatLonS, true);
+	xhttp.open("GET", "http://localhost/web/php/eventful.php?latlon="+latLong, true);
 	xhttp.send();
 }

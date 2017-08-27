@@ -10,7 +10,7 @@
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 
-<body>
+<body onload="initialize()">
 
 	<div class="fundo_titulo">
 	    <h1> <a href="index.html"> Events4All </a> </h1>
@@ -21,26 +21,33 @@
 		      <ul>
 				<li><a href="index.html">Home</a></li>
 				<li><a href="">Eventos da Semana</a></li>
-				<li><a href="buscar_localidade.html">Buscar Localidade</a></li>
+				<li><a href="">Principais Artistas</a></li>
 				<li><a href="programacao.html">Programação</a></li>
 				<li><a href="">Ajuda</a></li>
 				<li><a href="">Fale com a gente</a></li>
 		      </ul>
 		</nav>
 	</div>
+     
+     <div id="busca_local">
+          <input type="text" id="input_busca_local">
+          <input type="submit" id="submit_busca_local">
+     </div>
+     
 
-	<div id="calendar_map_results"> 
-		<div id="results"> </div>
-		<div id="map-container"> 
-			<div><p id="errorBox"></p></div>
-		</div>
-	</div>
-	
 	<div id="eventos">
 		<h2>Eventos nas proximidades</h2>
 		<div id="results2"> </div>
 		<br><br><br><br><br><br><br>
 	</div>
+
+     <div id="lista_eventos">
+          <table id="tabela_eventos">
+               <tbody id="tabela_corpo">
+
+               </tbody>
+          </table>
+     </div>
 
 	<div id="rodape">
 		<footer>
@@ -50,6 +57,7 @@
 
 </body>
 	<script type="text/javascript" src="js/map.js"></script>
-	<script src="lib/markerclusterer.js"></script>
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBllazmTrek8tGD2zzWFAzgdTnHRmENssE&libraries=places&callback=initMap"></script>
+     <script type="text/javascript" src="js/buscar_local.js"></script>
+     <script src="lib/markerclusterer.js"></script>
+     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBllazmTrek8tGD2zzWFAzgdTnHRmENssE&libraries=places"></script>     
 </html>
